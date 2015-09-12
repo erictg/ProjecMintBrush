@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[ChatEntry]
+(
+	[ID]	TEXT,
+	[COMMENT]	TEXT,
+	[ENTRIE_ID]	TEXT,
+	[USER_ID]	TEXT,
+	[DATE_CREATED]	TEXT
+)

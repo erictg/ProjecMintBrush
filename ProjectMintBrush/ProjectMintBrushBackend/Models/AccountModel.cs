@@ -13,11 +13,27 @@ namespace ProjectMintBrushBackend.Models
         public string Password { get; set; }
         [Required]
         public IdentificationNumber ID { get; set; }
-
+        [Required]
+        public string Email { get; set; }
         //not required
         public List<IdentificationNumber> EventsOwned { get; set; }
         public List<IdentificationNumber> EntriesOwned { get; set; }
-        public List<IdentificationNumber> ChatEntries { get; set; }
+        public List<IdentificationNumber> CommentEntries { get; set; }
+
+        public static AccountModel CreateAccount(string username, string password, string email)
+        {
+            var am = new AccountModel()
+            {
+                Username = username,
+                Password = password,
+                Email = email,
+                ID = IdentificationNumber.NewID(),
+                EventsOwned = new List<IdentificationNumber>(),
+                EntriesOwned = new List<IdentificationNumber>(),
+                CommentEntries = new List<IdentificationNumber>()
+            };
+            return am;
+        }
     }
 
     public class IdentificationNumber
@@ -36,8 +52,11 @@ namespace ProjectMintBrushBackend.Models
         }
         public static IdentificationNumber NewID()
         {
-            //some logic to create a random hex code
-            return new IdentificationNumber("000000");
+            var random = new Random(); 
+            var x = String.Format("#{0:X6}", random.Next(int.MaxValue));
+            
+            return new IdentificationNumber(x);
+            
         }
     }
 }

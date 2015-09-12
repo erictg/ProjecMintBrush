@@ -5,13 +5,20 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ProjectMintBrushBackend.Models;
+using ProjectMintBrushBackend;
+
 namespace ProjectMintBrushBackend.Controllers
 {
     public class AccountController : ApiController
     {
-        public IHttpActionResult GetAccount(string account)
+        // /api/account/addacount?username=[username]&password=[password]&email=[email]
+        [HttpGet]
+        public IHttpActionResult AddAccount(string username, string password, string email)
         {
-            return Ok("it worked " + account);
+            var newAccount = AccountModel.CreateAccount(username, password, email);
+            SQLCommand.ExecuteQuery("INSERT INTO dbo.Users VALUES ('" + newAccount.ID.ID + "','" + newAccount.Username + "','" + newAccount.Password + "','" + newAccount.Email + "')");
+            SQLCommand.ExecuteQuery("INSERT INTO dbo.IdentificationNumbers VALUES('" + newAccount.ID.ID + "')");
+            return Json<AccountModel>(newAccount);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 namespace ProjectMintBrushBackend.Models
 {
-    public class ChatEntryModel
+    public class CommentEntryModel
     {
         [Required]
         public IdentificationNumber ID { get; set; }
@@ -19,9 +19,9 @@ namespace ProjectMintBrushBackend.Models
         [Required]
         public String Comment { get; set; }
 
-        public static ChatEntryModel CreateComment(IdentificationNumber userID, IdentificationNumber entryID, string comment)
+        public static CommentEntryModel CreateComment(IdentificationNumber userID, IdentificationNumber entryID, string comment)
         {
-            ChatEntryModel c = new ChatEntryModel()
+            CommentEntryModel c = new CommentEntryModel()
             {
                 ID = IdentificationNumber.NewID(),
                 UserOwned = userID,
