@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 namespace ProjectMintBrushBackend.Models
 {
-    public class CommentEntryModel
+    public class CommentEntryModel : IModel
     {
         [Required]
         public IdentificationNumber ID { get; set; }
@@ -31,6 +31,9 @@ namespace ProjectMintBrushBackend.Models
             };
             return c;
         }
-
+        public IdentificationNumber GetID()
+        {
+            return ID;
+        }
     }
 }

@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 namespace ProjectMintBrushBackend.Models
 {
-    public class EntryModel
+    public class EntryModel : IModel
     {
         [Required]
         public IdentificationNumber ID { get; set; }
@@ -13,7 +13,10 @@ namespace ProjectMintBrushBackend.Models
         public IdentificationNumber OwnedUserID { get; set; }
         [Required]
         public IdentificationNumber EventIn { get; set; }
-
+        public IdentificationNumber GetID()
+        {
+            return ID;
+        }
         //it will also need its picture
     }
 }

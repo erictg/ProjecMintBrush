@@ -5,7 +5,8 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 namespace ProjectMintBrushBackend.Models
 {
-    public class AccountModel
+    
+    public class AccountModel : IModel
     {
         [Required]
         public string Username { get; set; }
@@ -19,6 +20,17 @@ namespace ProjectMintBrushBackend.Models
         public List<IdentificationNumber> EventsOwned { get; set; }
         public List<IdentificationNumber> EntriesOwned { get; set; }
         public List<IdentificationNumber> CommentEntries { get; set; }
+
+        public AccountModel()
+        {
+            Username = "";
+            Password = "";
+            ID = IdentificationNumber.blankID();
+            Email = "";
+            EventsOwned = null;
+            EntriesOwned = null;
+            CommentEntries = null;
+        }
 
         public static AccountModel CreateAccount(string username, string password, string email)
         {
@@ -34,13 +46,21 @@ namespace ProjectMintBrushBackend.Models
             };
             return am;
         }
+
+        public IdentificationNumber GetID()
+        {
+            return ID;
+        }
     }
 
     public class IdentificationNumber
     {
         public string ID{ get; set; }
 
-        
+        public IdentificationNumber()
+        {
+            ID = "000000";
+        }
         public IdentificationNumber(string id)
         {
             ID = id;
@@ -53,7 +73,7 @@ namespace ProjectMintBrushBackend.Models
         public static IdentificationNumber NewID()
         {
             var random = new Random(); 
-            var x = String.Format("#{0:X6}", random.Next(int.MaxValue));
+            var x = String.Format("{0:X6}", random.Next(int.MaxValue));
             
             return new IdentificationNumber(x);
             
