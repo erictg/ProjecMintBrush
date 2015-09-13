@@ -88,6 +88,10 @@
     <Content Include="App_Data\db_log.ldf">
       <DependentUpon>db.mdf</DependentUpon>
     </Content>
+    <Content Include="App_Data\XMLStorage.mdf" />
+    <Content Include="App_Data\XMLStorage_log.ldf">
+      <DependentUpon>XMLStorage.mdf</DependentUpon>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -101,7 +105,7 @@
     <Compile Include="Models\CommentEntryModel.cs" />
     <Compile Include="Models\EntryModel.cs" />
     <Compile Include="Models\EventModel.cs" />
-    <Compile Include="MongoControl.cs" />
+    <Compile Include="Models\IModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLCommand.cs" />
   </ItemGroup>

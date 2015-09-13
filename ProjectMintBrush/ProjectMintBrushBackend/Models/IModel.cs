@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectMintBrushBackend
+namespace ProjectMintBrushBackend.Models
 {
-    public class MongoControl
+    public interface IModel
     {
+        IdentificationNumber GetID();
     }
 }

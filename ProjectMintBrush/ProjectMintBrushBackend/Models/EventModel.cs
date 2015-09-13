@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ProjectMintBrushBackend.Models
 {
-    public class EventModel
+    public class EventModel : IModel
     {
         //relational id numbers to map to other objects
         [Required]
@@ -27,6 +27,11 @@ namespace ProjectMintBrushBackend.Models
                 Entries = new List<IdentificationNumber>()
             };
             return c;
+        }
+
+        public IdentificationNumber GetID()
+        {
+            return ID;
         }
     }
 }
