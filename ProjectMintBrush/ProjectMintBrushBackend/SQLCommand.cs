@@ -89,10 +89,43 @@ namespace ProjectMintBrushBackend
                 con.Close();
                 return default(T);
             }
-            
+        }
 
+        public static void ExecuteQueryAddEntryToList(string hexcode, string table, string idToAdd, string listToAdd)
+        {
+            string query = "declare @doc xml  select @doc = Object from " + table + " where ID = '" + hexcode + "'  set @doc.modify('insert <IdentificationNumber><ID>" + idToAdd + "</ID></IdentificationNumber> after (/" + table + "/" + listToAdd + "/IdentificationNumber)[1]')  update " + table + " set Object = @doc where ID = '" + hexcode + "'";
+            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\Gretchen\Documents\GitHub\ProjecMintBrush\ProjectMintBrush\ProjectMintBrushBackend\App_Data\XMLStorage.mdf;Integrated Security=True");
+            con.Open();
+            SqlCommand com = new SqlCommand(query, con);
+            com.ExecuteNonQuery();
+            con.Close();
+        }
 
-            
+        public static void ExecuteQueryRemoveEntryFromList(string hexcode, string table, string idToDelete, string listToDeleteFrom)
+        {
+            string query = "declare @doc xml select @doc = Object from " + table + " where ID = '" + hexcode + "' if @doc IS NOT NULL BEGIN set @doc.modify('delete " + table+ "Model/" + listToDeleteFrom + "/IdentificationNumber/ID[text()][contains(.," + '"' + idToDelete + '"' + ")]')  set @doc.modify('delete AccountModel/EntriesOwned/IdentificationNumber[empty(./*)]') update " + table +" set Object = @doc where ID = '" + hexcode +"' END";
+            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\Gretchen\Documents\GitHub\ProjecMintBrush\ProjectMintBrush\ProjectMintBrushBackend\App_Data\XMLStorage.mdf;Integrated Security=True");
+            con.Open();
+            SqlCommand com = new SqlCommand(query, con);
+            com.ExecuteNonQuery();
+            con.Close();
+        }
+
+        public static void ExecuteQueryAddIDToIDList(string id)
+        {
+            ExecuteQuery("INSERT INTO dbo.IdentificationNumbers VALUES('" + id + "')");
+        }
+
+        public static void ExecuteQueryRemoveAccount(string hexcode, string username, string password, string email)
+        {
+            string query = "delete * from Users where ID = " + hexcode + " and USER_NAME = " + username + " and password = " + password + " and email = " + email;
+            string query2 = "delete * from Account where ID = " + hexcode;
+            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\Gretchen\Documents\GitHub\ProjecMintBrush\ProjectMintBrush\ProjectMintBrushBackend\App_Data\XMLStorage.mdf;Integrated Security=True");
+            con.Open();
+            SqlCommand com = new SqlCommand(query2, con);
+            com.ExecuteNonQuery();
+            con.Close();
+            ExecuteQuery(query);
         }
 
         private static string CreateXML(Object YourClassObject)
@@ -110,6 +143,7 @@ namespace ProjectMintBrushBackend
                 return xmlDoc.InnerXml;
             }
         }
+
         private static T LoadFromXMLString<T>(string xmlText) where T : ProjectMintBrushBackend.Models.IModel
         {
             var stringReader = new System.IO.StringReader(xmlText);

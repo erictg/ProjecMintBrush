@@ -44,6 +44,10 @@ namespace ProjectMintBrushBackend.Models
                 EntriesOwned = new List<IdentificationNumber>(),
                 CommentEntries = new List<IdentificationNumber>()
             };
+            am.EventsOwned.Add(IdentificationNumber.blankID());
+            am.EntriesOwned.Add(IdentificationNumber.blankID());
+            am.CommentEntries.Add(IdentificationNumber.blankID());
+
             return am;
         }
 
@@ -74,7 +78,7 @@ namespace ProjectMintBrushBackend.Models
         {
             var random = new Random(); 
             var x = String.Format("{0:X6}", random.Next(int.MaxValue));
-            
+            SQLCommand.ExecuteQueryAddIDToIDList(x);
             return new IdentificationNumber(x);
             
         }
