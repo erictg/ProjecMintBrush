@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "AccountApiTest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AccountApiTest</h2>
+<button id="button" onclick="createAccount()">MakeCall</button>
+<button id="query" onclick="queryAccount()">Query for account</button>
+<button id="update" onclick="updateAccount()">UpdateAccounts</button>
+<button id="delete" onclick="deleteAccount()">DeleteAccount</button>
+<ul id="list">
+
+</ul>
+
+
+<script>
+    var uri = "http://localhost:64898/api/account/postaccount";
+    var account = new Object();
+    account.Username = "erictg97";
+    account.Password = "sabrefan67";
+    account.Email = "ericsolender@gmail.com";
+
+    function createAccount() {
+        CreateAccount("eric", "sabrefan69", "ericsolender@gmail.com", function (data, textStatus, xhr) {
+            console.log(textStatus);
+        }, function (data, textStatus, xhr) {
+            console.log(testStatus);
+        });
+    }
+
+
+    function queryAccount() {
+        QueryAccount(function (data) {
+            console.log(data);
+        }, "1F5ED8ED");
+    }
+
+    function updateAccount() {
+        UpdateAccount('1E80A10', 'A34F6', "CommentEntries", false, function (a, b, c) {
+            console.log([a, b, c]);
+            console.log("worked");
+        }, function (a, b, c) {
+            console.log("error");
+        });
+    }
+
+    function deleteAccount() {
+        DeleteAccount("erictg97", "sabrefan67", "ericsolender@gmail.com", function (a, b, c) {
+            console.log("account deleted");
+            console.log([a, b, c]);
+        }, function () {
+            console.log("failed to delete account");
+        });
+    }
+
+        
+</script>
