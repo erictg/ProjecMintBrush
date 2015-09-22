@@ -13,12 +13,15 @@ namespace ProjectMintBrushBackend.Controllers
    
     public class AccountController : ApiController
     {
-        // /api/account/addacount?username=[username]&password=[password]&email=[email]
-        [HttpPut]
-        public HttpResponseMessage PutAccount(AccountModel json)
+        // /api/account/putacount?username=[username]&password=[password]&email=[email]
+        [HttpPost]
+        public HttpResponseMessage PostAccount(AccountModel json)
         {
             //var newAccount = AccountModel.CreateAccount(username, password, email);
             json.ID = IdentificationNumber.NewID();
+            json.EntriesOwned = new List<IdentificationNumber>();
+            json.EventsOwned = new List<IdentificationNumber>();
+            json.CommentEntries = new List<IdentificationNumber>();
             SQLCommand.ExecuteQuery("INSERT INTO dbo.Users VALUES ('" + json.ID.ID + "','" + json.Username + "','" + json.Password + "','" + json.Email + "')");
             SQLCommand.ExecuteQuerySaveObject<AccountModel>("a", json);
             return new HttpResponseMessage(HttpStatusCode.Accepted);
@@ -37,53 +40,38 @@ namespace ProjectMintBrushBackend.Controllers
             return Ok(400);
         }
 
-        //api/account/updateaccount?hexcode=[hexcode]&list=[list]&newID=[newID]&table=[table]&updateID=[updateID]
-        [Authorize]
-        [HttpPost]
-        public HttpResponseMessage PostAccount(string hexcode, string list, string newID, string table, string updateID)
-        {
-            //a = add, r = remove
-            if (updateID == "a")
-            {
-                try
-                {
-                    SQLCommand.ExecuteQueryAddEntryToList(hexcode, table, newID, list);
-                    return new HttpResponseMessage(HttpStatusCode.Accepted);
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.StackTrace);
-                    return new HttpResponseMessage(HttpStatusCode.Conflict);
-                }
-            }
-            else if (updateID == "r")
-            {
-                try
-                {
-                    SQLCommand.ExecuteQueryRemoveEntryFromList(hexcode, table, newID, list);
-                    return new HttpResponseMessage(HttpStatusCode.Accepted);
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.StackTrace);
-                    return new HttpResponseMessage(HttpStatusCode.Conflict);
-                }
-            }
-            else
-            {
-               return new HttpResponseMessage(HttpStatusCode.Conflict);
-            }
-            
-        }
-
-        //api/account/RemoveAccount?hexcode=[hexcode]&username=[username]&password=[password]&email=[email]
-        [Authorize]
-        [HttpGet]
-        public HttpResponseMessage DeleteAccount(string hexcode, string username, string password, string email)
+        //api/account/updateaccount
+        //[Authorize]
+        [AcceptVerbs("UPDATE")]
+        public void UpdateAccount(TransferObject obj)
         {
             try
             {
-                SQLCommand.ExecuteQueryRemoveAccount(hexcode, username, password, email);
+                if (obj.isAdding)
+                {
+                    SQLCommand.ExecuteQueryAddEntryToListAccount(obj.hexCode, obj.idToUpdate, obj.listToUpdate);
+                }
+                else
+                {
+                    SQLCommand.ExecuteQueryRemoveEntryFromListAccount(obj.hexCode, obj.idToUpdate, obj.listToUpdate);
+                }
+                //return "Sucess";
+            }
+            catch(Exception e)
+            {
+                Debug.WriteLine(e.StackTrace);
+                //return "Failed";
+            }
+        }
+
+        //api/account/RemoveAccount?hexcode=[hexcode]&username=[username]&password=[password]&email=[email]
+        //[Authorize]
+        [HttpDelete]
+        public HttpResponseMessage DeleteAccount(AccountModel model)
+        {
+            try
+            {
+                SQLCommand.ExecuteQueryRemoveAccount(model.ID.ID, model.Username, model.Password, model.Email);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
             catch (Exception e)
@@ -94,5 +82,12 @@ namespace ProjectMintBrushBackend.Controllers
             
             
         }
+    }
+    public class TransferObject
+    {
+        public string idToUpdate { get; set; }
+        public string listToUpdate { get; set; }
+        public string hexCode { get; set; }
+        public bool isAdding { get; set; }
     }
 }

@@ -6,12 +6,12 @@ using System.Web.Mvc;
 
 namespace ProjectMintBrushFrontend.Controllers
 {
-    public class HomeController : Controller
+    public class TestController : Controller
     {
-        public ActionResult Index()
+        // GET: Test
+        public ActionResult AccountApiTest()
         {
             return View();
         }
-
     }
 }
