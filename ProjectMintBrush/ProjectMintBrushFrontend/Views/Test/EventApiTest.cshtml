@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "EventApiTest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>EventApiTest</h2>
+<button onclick="createNewevent()">Create Event</button>
+
+<script type="text/javascript">
+    function createNewevent() {
+        CreateEvent("45ffd", Date.now(), Date.now(), Date.now(), 45.34, 45.66, 66.66, function (a, b, c) {
+            console.log("it worked");
+        }, function (a, b, c) {
+            console.log("failed");
+        });
+    }
+</script>
+
+

@@ -10,8 +10,9 @@ namespace ProjectMintBrushBackend.Controllers
 {
     public class EventController : ApiController
     {
-        [HttpPut]
-        public HttpResponseMessage PutAccount(EventModel json)
+        //api/event/postevent
+        [HttpPost]
+        public HttpResponseMessage PostEvent(EventModel json)
         {
             try
             {
@@ -30,6 +31,8 @@ namespace ProjectMintBrushBackend.Controllers
             }
             
         }
+
+
 
     }
 }
