@@ -13,5 +13,10 @@ namespace ProjectMintBrushFrontend.Controllers
         {
             return View();
         }
+
+        public ActionResult EventApiTest()
+        {
+            return View();
+        }
     }
 }

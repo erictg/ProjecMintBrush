@@ -9,9 +9,7 @@
 <button id="query" onclick="queryAccount()">Query for account</button>
 <button id="update" onclick="updateAccount()">UpdateAccounts</button>
 <button id="delete" onclick="deleteAccount()">DeleteAccount</button>
-<ul id="list">
 
-</ul>
 
 
 <script>
@@ -37,7 +35,7 @@
     }
 
     function updateAccount() {
-        UpdateAccount('1E80A10', 'A34F6', "CommentEntries", false, function (a, b, c) {
+        UpdateAccount('1E80A10', 'A34F6', AccountListEnum.CommentEntries, false, function (a, b, c) {
             console.log([a, b, c]);
             console.log("worked");
         }, function (a, b, c) {

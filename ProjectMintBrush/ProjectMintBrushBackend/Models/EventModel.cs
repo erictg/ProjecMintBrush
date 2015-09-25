@@ -11,27 +11,27 @@ namespace ProjectMintBrushBackend.Models
     {
         //relational id numbers to map to other objects
         [Required]
-        public IdentificationNumber ID { get; set; }
+        public virtual IdentificationNumber ID { get; set; }
         [Required]
-        public IdentificationNumber OwnedByUser { get; set; }
+        public virtual IdentificationNumber OwnedByUser { get; set; }
         [Required]
-        public DateTime StartTime { get; set; }
+        public virtual DateTime StartTime { get; set; }
         [Required]
-        public DateTime EndTime { get; set; }
+        public virtual DateTime EndTime { get; set; }
         [Required]
-        public DateTime ArtistPickTime { get; set; }
+        public virtual DateTime ArtistPickTime { get; set; }
         [Required]
-        public double MinPrice { get; set; }
+        public virtual double MinPrice { get; set; }
         [Required]
-        public double MaxPrice { get; set; }
+        public virtual double MaxPrice { get; set; }
         [Required]
-        public double OptimalPrice { get; set; }
+        public virtual double OptimalPrice { get; set; }
         
 
 
 
         //not required
-        public List<IdentificationNumber> Entries { get; set; }
+        public virtual List<IdentificationNumber> Entries { get; set; }
 
         public EventModel()
         {

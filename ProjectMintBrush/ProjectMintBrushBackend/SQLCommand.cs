@@ -12,9 +12,19 @@ namespace ProjectMintBrushBackend
 {
     public class SQLCommand
     {
+
+        private static string xmlConnection = @"Data Source=198.71.225.113;Integrated Security=False;User ID=erictg97;Connect Timeout=15;Encrypt=False;Packet Size=4096";
+        private static string otherConnection = @"Data Source=198.71.225.113;Integrated Security=False;User ID=finesharpie;Connect Timeout=15;Encrypt=False;Packet Size=4096";
+
+        #region global methods
         public static List<String>  ExecuteQueryWithResult(String query)
         {
+#if Debug
             SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\Gretchen\Documents\GitHub\ProjecMintBrush\ProjectMintBrush\ProjectMintBrushBackend\App_Data\db.mdf;Integrated Security=True");
+#else
+            SqlConnection con = new SqlConnection(otherConnection);
+#endif
+            
             con.Open();
             SqlCommand com = new SqlCommand(query, con);
             var reader = com.ExecuteReader();
@@ -27,7 +37,11 @@ namespace ProjectMintBrushBackend
 
         public static void ExecuteQuery(string query)
         {
+#if Debug
             SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\Gretchen\Documents\GitHub\ProjecMintBrush\ProjectMintBrush\ProjectMintBrushBackend\App_Data\db.mdf;Integrated Security=True");
+#else
+            SqlConnection con = new SqlConnection(otherConnection);
+#endif
             con.Open();
             SqlCommand com = new SqlCommand(query, con);
             com.ExecuteNonQuery();
@@ -54,8 +68,11 @@ namespace ProjectMintBrushBackend
 
             string xml = CreateXML(obj);
             string query = "INSERT INTO " + db + " VALUES('" + obj.GetID().ID + "','" + xml + "')";
-
+#if Debug
             SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\Gretchen\Documents\GitHub\ProjecMintBrush\ProjectMintBrush\ProjectMintBrushBackend\App_Data\XMLStorage.mdf;Integrated Security=True");
+#else
+            SqlConnection con = new SqlConnection(xmlConnection);
+#endif
             con.Open();
             SqlCommand com = new SqlCommand(query, con);
             com.ExecuteNonQuery();
@@ -65,7 +82,11 @@ namespace ProjectMintBrushBackend
         public static T ExecuteQueryLoadObject<T>(string hexcode, string database, string column) where T : ProjectMintBrushBackend.Models.IModel
         {
             string query = "SELECT " + column + " FROM " + database + " WHERE(ID = '" + hexcode + "')";
+#if Debug
             SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\Gretchen\Documents\GitHub\ProjecMintBrush\ProjectMintBrush\ProjectMintBrushBackend\App_Data\XMLStorage.mdf;Integrated Security=True");
+#else
+            SqlConnection con = new SqlConnection(xmlConnection);
+#endif
             con.Open();
             SqlCommand com = new SqlCommand(query, con);
             var reader = com.ExecuteReader();
@@ -91,10 +112,17 @@ namespace ProjectMintBrushBackend
             }
         }
 
+        #endregion
+
+        #region Accounts
         public static void ExecuteQueryAddEntryToListAccount(string hexcode, string idToAdd, string listToAdd)
         {
             string query = "declare @doc xml  select @doc = Object from Account where ID = '" + hexcode + "'  set @doc.modify('insert <IdentificationNumber><ID>" + idToAdd + "</ID></IdentificationNumber> after (/AccountModel/" + listToAdd + "/IdentificationNumber)[1]')  update Account set Object = @doc where ID = '" + hexcode + "'";
+#if Debug
             SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\Gretchen\Documents\GitHub\ProjecMintBrush\ProjectMintBrush\ProjectMintBrushBackend\App_Data\XMLStorage.mdf;Integrated Security=True");
+#else
+            SqlConnection con = new SqlConnection(xmlConnection);
+#endif
             con.Open();
             SqlCommand com = new SqlCommand(query, con);
             com.ExecuteNonQuery();
@@ -104,7 +132,12 @@ namespace ProjectMintBrushBackend
         public static void ExecuteQueryRemoveEntryFromListAccount(string hexcode, string idToDelete, string listToDeleteFrom)
         {
             string query = "declare @doc xml select @doc = Object from Account where ID = '" + hexcode + "' if @doc IS NOT NULL BEGIN set @doc.modify('delete AccountModel/" + listToDeleteFrom + "/IdentificationNumber/ID[text()][contains(.," + '"' + idToDelete + '"' + ")]')  set @doc.modify('delete AccountModel/" + listToDeleteFrom + "/IdentificationNumber[empty(./*)]') update Account set Object = @doc where ID = '" + hexcode + "' END";
+            
+#if Debug
             SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\Gretchen\Documents\GitHub\ProjecMintBrush\ProjectMintBrush\ProjectMintBrushBackend\App_Data\XMLStorage.mdf;Integrated Security=True");
+#else
+            SqlConnection con = new SqlConnection(xmlConnection);
+#endif
             con.Open();
             SqlCommand com = new SqlCommand(query, con);
             com.ExecuteNonQuery();
@@ -127,7 +160,16 @@ namespace ProjectMintBrushBackend
             con.Close();
             ExecuteQuery(query);
         }
+        #endregion
 
+        #region Events
+
+        
+
+
+        #endregion
+
+        #region XML methods
         private static string CreateXML(Object YourClassObject)
         {
             XmlDocument xmlDoc = new XmlDocument();   //Represents an XML document, 
@@ -157,8 +199,9 @@ namespace ProjectMintBrushBackend
             {
                 return default(T);
             }
-            
+
         }
+        #endregion
     }
 
 
