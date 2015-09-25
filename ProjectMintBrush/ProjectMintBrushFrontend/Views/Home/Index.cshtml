@@ -2,19 +2,23 @@
     ViewBag.Title = "Coming Soon";
     Layout = null;
 }
+
+<script src="~/Scripts/angular.min.js"></script>
+<script src="//code.angularjs.org/1.4.6/angular-route.min.js"></script>
+<script src="~/Scripts/singlePageApplications.js"></script>
+
 <style>
     img {
         height:90%;
         vertical-align:middle;
     }
+    body {
+        background-color:#282828;
+    }
 </style>
 
-<script>
-    var x = screen.width;
-    var image = document.getElementByClassName("image");
-    image.style.width = (x / 2);
-</script>
-
 <center>
-    <img class="image" src="@Url.Content("~/Content/Images/cs5.jpg")" />
+    <img class="image" src="@Url.Content("~/Content/Images/WIPv1.jpg")" />
 </center>
+
+<div ng-controller="mainCotroller"></div>
