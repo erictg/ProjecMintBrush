@@ -9,17 +9,17 @@ namespace ProjectMintBrushBackend.Models
     public class AccountModel : IModel
     {
         [Required]
-        public string Username { get; set; }
+        public virtual string Username { get; set; }
         [Required]
-        public string Password { get; set; }
+        public virtual string Password { get; set; }
         [Required]
-        public IdentificationNumber ID { get; set; }
+        public virtual IdentificationNumber ID { get; set; }
         [Required]
-        public string Email { get; set; }
+        public virtual string Email { get; set; }
         //not required
-        public List<IdentificationNumber> EventsOwned { get; set; }
-        public List<IdentificationNumber> EntriesOwned { get; set; }
-        public List<IdentificationNumber> CommentEntries { get; set; }
+        public virtual List<IdentificationNumber> EventsOwned { get; set; }
+        public virtual List<IdentificationNumber> EntriesOwned { get; set; }
+        public virtual List<IdentificationNumber> CommentEntries { get; set; }
 
         public AccountModel()
         {

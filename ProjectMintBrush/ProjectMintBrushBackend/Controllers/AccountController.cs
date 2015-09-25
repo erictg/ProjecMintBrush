@@ -41,7 +41,7 @@ namespace ProjectMintBrushBackend.Controllers
         }
 
         //api/account/updateaccount
-        //[Authorize]
+        [Authorize]
         [AcceptVerbs("UPDATE")]
         public void UpdateAccount(TransferObject obj)
         {
@@ -65,7 +65,7 @@ namespace ProjectMintBrushBackend.Controllers
         }
 
         //api/account/RemoveAccount?hexcode=[hexcode]&username=[username]&password=[password]&email=[email]
-        //[Authorize]
+        [Authorize]
         [HttpDelete]
         public HttpResponseMessage DeleteAccount(AccountModel model)
         {

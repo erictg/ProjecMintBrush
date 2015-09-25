@@ -8,11 +8,11 @@ namespace ProjectMintBrushBackend.Models
     public class EntryModel : IModel
     {
         [Required]
-        public IdentificationNumber ID { get; set; }
+        public virtual IdentificationNumber ID { get; set; }
         [Required]
-        public IdentificationNumber OwnedUserID { get; set; }
+        public virtual IdentificationNumber OwnedUserID { get; set; }
         [Required]
-        public IdentificationNumber EventIn { get; set; }
+        public virtual IdentificationNumber EventIn { get; set; }
         public IdentificationNumber GetID()
         {
             return ID;
