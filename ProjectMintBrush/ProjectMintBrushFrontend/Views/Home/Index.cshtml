@@ -5,11 +5,16 @@
 <style>
     img {
         height:90%;
-        width:100%;
         vertical-align:middle;
     }
 </style>
 
+<script>
+    var x = screen.width;
+    var image = document.getElementByClassName("image");
+    image.style.width = (x / 2);
+</script>
+
 <center>
-    <img src="@Url.Content("~/Content/Images/cs5.jpg")" />
+    <img class="image" src="@Url.Content("~/Content/Images/cs5.jpg")" />
 </center>
