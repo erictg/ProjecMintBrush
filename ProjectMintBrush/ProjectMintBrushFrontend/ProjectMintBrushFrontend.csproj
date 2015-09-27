@@ -220,7 +220,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Test\AccountApiTest.cshtml" />
     <Content Include="Views\Test\EventApiTest.cshtml" />
-    <Content Include="Views\Shared\Login.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
