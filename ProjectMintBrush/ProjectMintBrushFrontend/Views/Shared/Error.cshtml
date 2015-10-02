@@ -1,8 +1,18 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
-
 @{
-    ViewBag.Title = "Error";
+    if(ViewBag.StatusCode == 404){
+        string error = "404 Page Not Found";
+        ViewBag.Title(error);
+    }
+
+    Layout = null;
 }
+
+<h1 class="error"></h1>
+
+@Model.ActionName
+@Model.Exception.Message
+@Model.Exception.StackTrace
 
 <h1 class="text-danger">Error.</h1>
 <h2 class="text-danger">An error occurred while processing your request.</h2>

@@ -38,7 +38,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.6.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MongoDB.Bson, Version=2.0.1.27, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MongoDB.Bson.2.0.1\lib\net45\MongoDB.Bson.dll</HintPath>
       <Private>True</Private>
@@ -52,6 +68,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Spatial, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.6.0\lib\net40\System.Spatial.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -61,6 +81,10 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http.OData, Version=5.3.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.5.3.1\lib\net45\System.Web.Http.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -84,31 +108,45 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\db.mdf" />
-    <Content Include="App_Data\db_log.ldf">
-      <DependentUpon>db.mdf</DependentUpon>
-    </Content>
-    <Content Include="App_Data\XMLStorage.mdf" />
-    <Content Include="App_Data\XMLStorage_log.ldf">
-      <DependentUpon>XMLStorage.mdf</DependentUpon>
+    <Content Include="App_Data\ArtSharpDB.mdf" />
+    <Content Include="App_Data\ArtSharpDB_log.ldf">
+      <DependentUpon>ArtSharpDB.mdf</DependentUpon>
     </Content>
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CommentsController.cs" />
+    <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\EntriesController.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
+    <Compile Include="Enums\AccountType.cs" />
+    <Compile Include="Enums\Genre.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModel.cs" />
-    <Compile Include="Models\CommentEntryModel.cs" />
-    <Compile Include="Models\EntryModel.cs" />
-    <Compile Include="Models\EventModel.cs" />
-    <Compile Include="Models\IModel.cs" />
+    <Compile Include="Migrations\201509301603479_InitialCreate.cs" />
+    <Compile Include="Migrations\201509301603479_InitialCreate.Designer.cs">
+      <DependentUpon>201509301603479_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510022015109_migrationfour.cs" />
+    <Compile Include="Migrations\201510022015109_migrationfour.Designer.cs">
+      <DependentUpon>201510022015109_migrationfour.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510022023535_migrationfive.cs" />
+    <Compile Include="Migrations\201510022023535_migrationfive.Designer.cs">
+      <DependentUpon>201510022023535_migrationfive.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Entry.cs" />
+    <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\Portfolio.cs" />
+    <Compile Include="Models\ProjectMintBrushBackendContext.cs" />
+    <Compile Include="Controllers\PortfoliosController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SQLCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -120,6 +158,17 @@
     </None>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201509301603479_InitialCreate.resx">
+      <DependentUpon>201509301603479_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510022015109_migrationfour.resx">
+      <DependentUpon>201510022015109_migrationfour.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510022023535_migrationfive.resx">
+      <DependentUpon>201510022023535_migrationfive.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

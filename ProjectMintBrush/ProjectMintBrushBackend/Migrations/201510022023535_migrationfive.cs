@@ -1,0 +1,27 @@
+namespace ProjectMintBrushBackend.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class migrationfive : DbMigration
+    {
+        public override void Up()
+        {
+            CreateTable(
+                "dbo.Portfolios",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        ArtistID = c.Int(nullable: false),
+                        EntryID = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID);
+            
+        }
+        
+        public override void Down()
+        {
+            DropTable("dbo.Portfolios");
+        }
+    }
+}

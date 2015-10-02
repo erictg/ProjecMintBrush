@@ -74,14 +74,14 @@ function DeleteAccount(username, password, email, successFunction, errorFunction
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function CreateEvent(ownerID, startTime, endTime, artistPickTime, minPrice, maxPrice, optimalPrice, successFunction, errorFunction) {
-
-    if (typeof (ownerID) != "string" || typeof (startTime) != "number" || typeof (endTime) != "number" || typeof (artistPickTime) != "number" || typeof (minPrice) != "number" || typeof (maxPrice) != "number" || typeof (optimalPrice) != "numbers" || typeof (successFunction) != "function" || typeof (errorFunction) != "function") {
+    console.log(typeof (ownerID) + " " + typeof (startTime) + " " + typeof (successFunction) + " " + typeof(minPrice));
+    if (typeof (ownerID) != "string" || typeof (startTime) != "number" || typeof (endTime) != "number" || typeof (artistPickTime) != "number" || typeof (minPrice) != "number" || typeof (maxPrice) != "number" || typeof (optimalPrice) != "number" || typeof (successFunction) != "function" || typeof (errorFunction) != "function") {
         throw new Error("error in parameters");
     }
-    var object = { OwnedByUser: ownerId, StartTime: startTime, EndTime: endTime, ArtistPickTime: artistPickTime, MinPrice: minPrice, MaxPrice: maxPrice, OptimalPrice: optimalPrice };
+    var object = { OwnedByUser: ownerID, StartTime: startTime, EndTime: endTime, ArtistPickTime: artistPickTime, MinPrice: minPrice, MaxPrice: maxPrice, OptimalPrice: optimalPrice };
     
     $.ajax({
-        url: "http://artsharp.co/api/event/postevent",
+        url: "http://localhost:64898/api/event/postevent",
         type: "POST",
         datType: "json",
         data: object,

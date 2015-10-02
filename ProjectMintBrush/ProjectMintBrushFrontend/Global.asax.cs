@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ProjectMintBrushFrontend.App_Start;
+using ProjectMintBrushFrontend.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,9 +17,10 @@ namespace ProjectMintBrushFrontend
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
             AreaRegistration.RegisterAllAreas();
-            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+       
     }
 }
